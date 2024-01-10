@@ -1,11 +1,11 @@
 import 'dart:collection';
 
-import 'package:flow_board/src/widgets/board_group/group_data.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flow_board/src/widgets/board_group/group_data.dart';
+import 'package:flutter/material.dart';
 
 import '../utils/log.dart';
 import 'reorder_flex/reorder_flex.dart';
-import 'package:flutter/material.dart';
 import 'reorder_phantom/phantom_controller.dart';
 
 typedef OnMoveGroup = void Function(
@@ -204,6 +204,13 @@ class FlowBoardController extends ChangeNotifier
   /// If the group with id [groupId] is not exist, this method will do nothing.
   void updateGroupItem(String groupId, FlowBoardGroupItem item) {
     getGroupController(groupId)?.replaceOrInsertItem(item);
+  }
+
+  void setGroupDraggability(bool groupDragging, itemDragging) {
+    for (final groupController in _groupControllers.values) {
+      groupController.setDraggability(groupDragging, itemDragging);
+    }
+    notifyListeners();
   }
 
   void enableGroupDragging(bool isEnable) {

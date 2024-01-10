@@ -1,4 +1,5 @@
 import 'dart:collection';
+
 import 'package:equatable/equatable.dart';
 import 'package:flow_board/src/utils/log.dart';
 import 'package:flow_board/src/widgets/reorder_flex/reorder_flex.dart';
@@ -168,6 +169,15 @@ class FlowBoardGroupController extends ChangeNotifier with EquatableMixin {
   bool _containsItem(FlowBoardGroupItem item) {
     return groupData._items.indexWhere((element) => element.id == item.id) !=
         -1;
+  }
+
+  void setDraggability(bool groupDragging, itemDragging) {
+    groupData.draggable = groupDragging;
+
+    for (final item in groupData._items) {
+      item.draggable = itemDragging;
+    }
+    _notify();
   }
 
   void enableDragging(bool isEnable) {
